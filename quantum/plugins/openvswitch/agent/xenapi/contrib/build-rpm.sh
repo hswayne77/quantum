@@ -7,15 +7,18 @@ export QUANTUM_ROOT="$thisdir/../../../../../../"
 export PYTHONPATH=$QUANTUM_ROOT
 
 cd $QUANTUM_ROOT
-VERSION=$(sh -c "(cat $QUANTUM_ROOT/quantum/version.py; \
-                  echo 'print common_version.VersionInfo(\"quantum\").release_string()') | \
-                  python")
+#VERSION=$(sh -c "(cat $QUANTUM_ROOT/quantum/version.py; \
+#                  echo 'print common_version.VersionInfo(\"quantum\").release_string()') | \
+#                  python")
+VERSION=$(python -c "import sys,os; sys.path.append('"${QUANTUM_ROOT}"/quantum'); import version; print version.version_info.canonical_version_string()")
+
+
 cd -
 
 PACKAGE=openstack-quantum-xen-plugins
-RPMBUILD_DIR=$PWD/rpmbuild
-if [ ! -d $RPMBUILD_DIR ]; then
-    echo $RPMBUILD_DIR is missing
+RPMBUILD_DIR=${PWD}/rpmbuild
+if [ ! -d ${RPMBUILD_DIR} ]; then
+    echo ${RPMBUILD_DIR} is missing
     exit 1
 fi
 
@@ -29,6 +32,7 @@ mkdir /tmp/$PACKAGE
 cp -r ../etc/xapi.d /tmp/$PACKAGE
 tar czf $RPMBUILD_DIR/SOURCES/$PACKAGE.tar.gz -C /tmp $PACKAGE
 
-rpmbuild -ba --nodeps --define "_topdir $RPMBUILD_DIR"  \
-    --define "version $VERSION" \
-    $RPMBUILD_DIR/SPECS/$PACKAGE.spec
+rpmbuild -ba --nodeps \
+         --define "_topdir $RPMBUILD_DIR" \
+         --define "version $VERSION" \
+         $RPMBUILD_DIR/SPECS/$PACKAGE.spec
