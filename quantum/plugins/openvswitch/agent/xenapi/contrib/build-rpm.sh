@@ -7,9 +7,6 @@ export QUANTUM_ROOT="$thisdir/../../../../../../"
 export PYTHONPATH=$QUANTUM_ROOT
 
 cd $QUANTUM_ROOT
-#VERSION=$(sh -c "(cat $QUANTUM_ROOT/quantum/version.py; \
-#                  echo 'print common_version.VersionInfo(\"quantum\").release_string()') | \
-#                  python")
 VERSION=$(python -c "import sys,os; sys.path.append('"${QUANTUM_ROOT}"/quantum'); import version; print version.version_info.canonical_version_string()")
 
 
