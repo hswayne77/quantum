@@ -2,9 +2,14 @@
 
 set -eux
 
+# install packages for rpm-build 
+pip install pbr
+yum --enablerepo=base install -y rpm-build
+
 thisdir=$(dirname $(readlink -f "$0"))
 export QUANTUM_ROOT="$thisdir/../../../../../../"
 export PYTHONPATH=$QUANTUM_ROOT
+
 
 cd $QUANTUM_ROOT
 VERSION=$(python -c "import sys,os; sys.path.append('"${QUANTUM_ROOT}"/quantum'); import version; print version.version_info.canonical_version_string()")
