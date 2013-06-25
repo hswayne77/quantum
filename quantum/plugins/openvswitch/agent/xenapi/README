@@ -13,4 +13,4 @@ Otherwise, you can build an rpm by running the following command:
 
 and install the rpm by running the following command (from dom0):
 
-    rpm -i openstack-quantum-xen-plugins.rpm
+    ./install-noarch-rpm.sh
