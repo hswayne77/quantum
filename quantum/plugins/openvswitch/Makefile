@@ -3,7 +3,8 @@ PHONY: help
 
 AGENT_DIST_DIR=ovs_quantum_agent
 AGENT_DIST_TARBALL=ovs_quantum_agent.tgz
-VERSION=$(shell python -c "import sys ; sys.path.append('../../../quantum/') ; import version ; print version.canonical_version_string()")
+#VERSION=$(shell python -c "import sys ; sys.path.append('../../../quantum/') ; import version ; print version.canonical_version_string()")
+VERSION=2013.1
 XAPI_PLUGINS_DIR=$(AGENT_DIST_DIR)/build/ovs-quantum-agent-$(VERSION)/etc/xapi.d/plugins
 RPM_BUILD_ROOT=$(AGENT_DIST_DIR)/build/rpm
 
