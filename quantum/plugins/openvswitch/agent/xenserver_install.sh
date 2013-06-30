@@ -1,7 +1,8 @@
 #!/bin/bash
 
 CONF_FILE=/etc/xapi.d/plugins/ovs_quantum_plugin.ini
-VERSION=$(python -c "import sys,os ; sys.path.append('../../../../quantum/') ; import version ; os.chdir('../../../../'); print version.version_info.canonical_version_string()")
+#VERSION=$(python -c "import sys,os ; sys.path.append('../../../../quantum/') ; import version ; os.chdir('../../../../'); print version.version_info.canonical_version_string()")
+VERSION=2013.1
 
 # install EPEL package
 # --------------------
@@ -19,7 +20,7 @@ sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/epel.repo
 
 # install ovs-quantum-agent rpm package
 # --------------------------------------
-rpm -Uvh $(pwd)/build/rpm/RPMS/noarch/ovs-quantum-agent-${VERSION}-1.noarch.rpm
+rpm -Uvh ../ovs-quantum-agent/build/rpm/RPMS/noarch/ovs-quantum-agent-${VERSION}-1.noarch.rpm
 
 # create integration bridge
 # -------------------------
