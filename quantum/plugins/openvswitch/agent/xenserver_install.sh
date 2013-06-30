@@ -20,7 +20,7 @@ sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/epel.repo
 
 # install ovs-quantum-agent rpm package
 # --------------------------------------
-rpm -Uvh ../ovs-quantum-agent/build/rpm/RPMS/noarch/ovs-quantum-agent-${VERSION}-1.noarch.rpm
+rpm -Uvh ../ovs_quantum_agent/build/rpm/RPMS/noarch/ovs-quantum-agent-${VERSION}-1.noarch.rpm
 
 # create integration bridge
 # -------------------------
