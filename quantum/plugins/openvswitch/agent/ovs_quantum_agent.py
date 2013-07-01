@@ -605,9 +605,9 @@ class OVSQuantumAgent(sg_rpc.SecurityGroupAgentRpcCallbackMixin):
                 details = self.plugin_rpc.get_device_details(self.context,
                                                              device,
                                                              self.agent_id)
-            except Exception:
+            except Exception as e:
                 LOG.debug(_("Unable to get port details for "
-                            "%(device)s: %(sys.exec_info()[1])s"), locals())
+                            "%(device)s: %(e)s"), locals())
                 resync = True
                 continue
             port = self.int_br.get_vif_port_by_id(details['device'])
@@ -635,8 +635,8 @@ class OVSQuantumAgent(sg_rpc.SecurityGroupAgentRpcCallbackMixin):
                 details = self.plugin_rpc.update_device_down(self.context,
                                                              device,
                                                              self.agent_id)
-            except Exception:
-                LOG.debug(_("port_removed failed for %(device)s: %(sys.exec_info()[1])s"),
+            except Exception as e:
+                LOG.debug(_("port_removed failed for %(device)s: %(e)s"),
                           locals())
                 resync = True
                 continue
@@ -667,9 +667,9 @@ class OVSQuantumAgent(sg_rpc.SecurityGroupAgentRpcCallbackMixin):
                 if self.local_ip != tunnel['ip_address']:
                     tun_name = 'gre-%s' % tunnel['id']
                     self.tun_br.add_tunnel_port(tun_name, tunnel['ip_address'])
-        except Exception:
-            LOG.debug(_("Unable to sync tunnel IP %(local_ip)s: %(sys.exec_info()[1])s"),
-                      {'local_ip': self.local_ip, 'e': sys.exec_info()[1]})
+        except Exception as e:
+            LOG.debug(_("Unable to sync tunnel IP %(local_ip)s: %(e)s"),
+                      {'local_ip': self.local_ip, 'e': e})
             resync = True
         return resync
 
@@ -727,8 +727,8 @@ def create_agent_config_map(config):
     """
     try:
         bridge_mappings = q_utils.parse_mappings(config.OVS.bridge_mappings)
-    except ValueError:
-        raise ValueError(_("Parsing bridge_mappings failed: %s.") % sys.exec_info()[1])
+    except ValueError as e:
+        raise ValueError(_("Parsing bridge_mappings failed: %s.") % e)
 
     kwargs = dict(
         integ_br=config.OVS.integration_bridge,
@@ -754,8 +754,8 @@ def main():
 
     try:
         agent_config = create_agent_config_map(cfg.CONF)
-    except ValueError:
-        LOG.error(_('%s Agent terminated!'), sys.exec_info()[1])
+    except ValueError as e:
+        LOG.error(_('%s Agent terminated!'), e)
         sys.exit(1)
 
     plugin = OVSQuantumAgent(**agent_config)
