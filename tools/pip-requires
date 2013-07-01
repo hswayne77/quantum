@@ -13,7 +13,7 @@ iso8601>=0.1.4
 kombu>=1.0.4
 netaddr
 python-quantumclient>=2.2.0,<3.0.0
-pyudev
+#pyudev  #this package will cause xenserver5.6 throws libudev-devel not found exception.
 sqlalchemy>=0.7.8,<=0.7.99
 WebOb>=1.2
 python-keystoneclient>=0.2.0
