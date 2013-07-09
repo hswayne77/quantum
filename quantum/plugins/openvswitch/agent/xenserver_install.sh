@@ -3,7 +3,7 @@
 set -x
 
 #CONF_FILE=/etc/xapi.d/plugins/ovs_quantum_plugin.ini
-CONF_FILE=/etc/quantum/plugins/ovs_quantum_plugin.ini
+CONF_FILE=/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini
 #VERSION=$(python -c "import sys,os ; sys.path.append('../../../../quantum/') ; import version ; os.chdir('../../../../'); print version.version_info.canonical_version_string()")
 VERSION=2013.1
 
@@ -39,9 +39,16 @@ fi
 
 # copy quantum config
 # -------------------
-QCFG=/etc/quantum
-cp ../../../../etc/quantum.conf ${QCFG}
-cp -r ../../../../etc/quantum/ ${QCFG}
+Q_CFG=/etc/quantum
+Q_PLUGIN=/etc/quantum/plugins/
+if [ ! -d ${Q_PLUGIN} ]; then
+    mkdir -p ${Q_PLUGIN}
+fi
+cp ../../../../etc/quantum.conf ${Q_CFG}
+cp ../../../../etc/rootwrap.conf ${Q_CFG}
+cp -r ../../../../etc/quantum/plugins/openvswitch/ ${Q_PLUGIN}
+cp -r ../../../../etc/quantum/rootwrap.d/ ${Q_CFG}
+
 
 
 # ovs_quantum_plugin config setting
